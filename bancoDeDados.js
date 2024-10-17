@@ -213,8 +213,8 @@ const moldesFunctions = {
             email: hashedEmail,
             password: hashedPassword,
             saldo: 1000,
-            chaveTel: "",
-            chaveEmail: "",
+            chaveTel: false,
+            chaveEmail: email,
             chaveRandom: this.gerarAleatorio(7), //Gera uma chave aleatoria, n toda hora muda, mas é uma aleatoria pra pessoa ja ter uma alem do email
         };
 
@@ -241,7 +241,7 @@ const moldesFunctions = {
     //Funcao para esconder as senhas 
     //Fiz isto pq eu tava usando mais de 1 vez tlgd
     //Aqui ele pega os parametros do iD HTML e o caminho das imagens!
-    escondeSenhas(idInput, idIcon, caminhoImageMostra, caminhoImagemEsconde) {
+    escondeSenhas: function(idInput, idIcon, caminhoImageMostra, caminhoImagemEsconde) {
         let password = idInput;
         let icon = idIcon;
 
@@ -266,7 +266,7 @@ const moldesFunctions = {
     },
     //Function para validar as senhas
     //Aqui contaremos os caracteres tamanho da palavra e possiveis sequencias de palavras.
-    validaSenha(password, email, cpf) {
+    validaSenha: function (password, email, cpf) {
         //Variavel de container onde ira aparecer a MSG de erro
         //Logo abaixo a variavel que cria um paragrafo que ira armazenas a msg de erro
         let msgErro = document.getElementById("msgErro");
@@ -332,12 +332,12 @@ const moldesFunctions = {
 
     },
     //Codigo oficial de verificao de email
-    validaEmail(email){
+    validaEmail: function(email){
         const compara = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/;
         return compara.test(email);
     },
     //Function para tentar validar a chave pix do usuario
-    ValidaChave(keyTransf,paragrafo,container){
+    ValidaChave: function(keyTransf,paragrafo,container){
         let controla;
         //Looping para ver se a chave esta compativel com alguma chave
         for(let i = 0; i < numUsers; i++){
@@ -367,5 +367,12 @@ const moldesFunctions = {
         console.log("Insira uma chave valida")
         container.appendChild(paragrafo); 
         return false;
+    },
+    //Function para validar um telefone
+    ValidaTell: function(numero){
+        // Expressão regular para verificar o padrão de telefone brasileiro com 11 dígitos
+        const padrao = /^(?:\(?\d{2}\)?\s?)?(?:9?\d{4}-?\d{4}|\d{8,9})$/;
+
+        return padrao.test(numero);
     },
 }
