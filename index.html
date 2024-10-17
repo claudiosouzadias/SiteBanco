@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Banco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="bodyPage">
+    <main>
+        <section class="main-page" id="mainPage">
+            <div class="design-login-container"> 
+                <img src="img/Tela-Register.png">
+            </div>
+
+            <div class="login-container">
+                <div class="title-login">
+                    <h1> Cadastre-se </h1>
+                </div>  
+                
+                <form class="register-area">
+                    <div class="wrapper">
+                        <input id="regCPF" name="1" placeholder="CPF" class="register__input" type="number">
+                    </div>
+                    <div class="wrapper">
+                        <input id="regEmail" name="2" placeholder="Email" class="register__input" type="email" required>
+                    </div>
+                    <div class="wrapper">
+                        <input id="regSenha" name="3" placeholder="Senha" class="register__input" type="password">
+                        <img src="img/esconde-senha-icon.png" alt="Esconde Senha" onclick="togglePassword()" class="regHide__password" id="toggleIcon">
+                    </div>
+                    <div class="wrapper">
+                        <input id="confirmaSenha" name="4" placeholder="Confirme sua senha" class="register__input" type="password">
+                        <img src="img/esconde-senha-icon.png" alt="Esconde Senha" onclick="togglePasswordConfirma()" class="regHide__password" id="toggleIconConfirma">
+                    </div>
+                </form>
+                <div id="msgErro" class="msg__erro"> </div>
+                <section class="confirma-button">
+                    <button onclick="registro()" class="reg__button">
+                        <span>Criar Conta</span>
+                    </button>
+                    <button onclick="" class="reg__button" id="googleButton">
+                        <img src="img/Google-Icon.png" alt="">
+                        <span>Cadastre-se com o google</span>
+                    </button>
+                    <button onclick="" class="reg__button" id="faceButton">
+                        <img src="img/Facebook-Icon.png" alt="">
+                        <span>Cadastre-se com o Facebook</span>
+                    </button>
+                    <button onclick="loginPage()" class="reg__button" id="backButton">
+                        <span>Login</span>
+                    </button>
+                </section>
+            </div>
+        </section>
+    </main>
+</body>
+<script src="app.js"></script>
+<script src="bancoDeDados.js"></script>
+<script src="server/src/App.java"></script>
+</html>
