@@ -19,4 +19,4 @@
 
 Ao baixar o arquivo você pode executa-lo com qualquer editor compativel, neste projeto foi usado Visual Studio Code.
 
-![image](![image](https://github.com/user-attachments/assets/ffe02851-5f4f-441b-8377-898f2c8ddf89))
+![image](![Captura de tela 2024-10-16 235210](https://github.com/user-attachments/assets/53ed9669-79ec-49de-9dac-c85d16e0d068))
