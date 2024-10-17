@@ -345,7 +345,7 @@ function pix() {
                     <button onclick="transferencia()">Transferir</button>
                     <section id="tranfereContainer"> </section>
                 </section>
-                <section class="container-keys">
+                <section class="container-keys" id="container-keys">
                     <h2>Suas atuais chaves de trasnferencia:</h2>
                 </section>
 
@@ -355,12 +355,87 @@ function pix() {
                 <img src="img/CardIcon.png" alt="Icon Card NuBank">
             </div>`;
 
+    let container = document.getElementById("container-keys");
+    let button = document.createElement('button');
+
+    button.textContent = "Mostrar";
+    button.addEventListener("click",chavesTransf);
+    container.appendChild(button);
+    function chavesTransf(){
+        //Variavel do container
+        let container = document.getElementById("container-keys");
+        //Variavel do titulo
+        let title = document.createElement('h3');
+        //Variaveis que vão mostrar as chaves na tela
+        let keyCPF = document.createElement('p');
+        let keyTell = document.createElement('p');
+        let keyEmail = document.createElement('p');
+        let keyRandom = document.createElement('p');
+
+        //Resetando para evitar criar varias vezes
+        container.innerHTML = "";
+    
+        title.textContent = "Essas são suas chaves atuais";
+    
+        keyCPF.textContent = "Chave CPF " + dados[atualUser].cpf;
+        keyTell.textContent = "Chave Telefone " + dados[atualUser].chaveTel;
+        keyEmail.textContent = "Chave Email " + dados[atualUser].chaveEmail;
+        keyRandom.textContent =  "Chave Aleatoria " + dados[atualUser].chaveRandom;
+    
+        container.appendChild(title);
+        //Atribuindo as chaves ao container;
+        container.appendChild(keyCPF);
+        container.appendChild(keyEmail);
+        container.appendChild(keyRandom);
+    
+        //verificando se ja existe a chave de telefone
+        if(dados[atualUser].chaveTel == false){
+            console.log("TELL N EXISTE!");
+
+            //Buttons para alterar as respectivas chaves
+            let buttonTell = document.createElement('button');
+            buttonTell.textContent = "Criar chave telfone";
+
+            //Adicionando botao ao container
+            container.appendChild(buttonTell);
+            
+            //Executando a funcao ao clicar
+            buttonTell.addEventListener("click",criarKeyTell);
+        } else if(dados[atualUser].chaveTel != false){
+            container.appendChild(keyTell);
+        }
+        //Funcao para criar a key do telefone 
+        function criarKeyTell(){
+            //Input para digitar a chave
+            let input = document.createElement('input');
+            input.placeholder = "Insira o seu telefone";
+            container.appendChild(input);
+            
+            //Criando botao para adicionar a chave
+            let adicionarButton = document.createElement('button');
+            adicionarButton.textContent = "Adicionar";
+            container.appendChild(adicionarButton);
+    
+            adicionarButton.addEventListener("click",function(){
+                let telefone = input.value;
+                if(moldesFunctions.ValidaTell(telefone)){
+                    //Adicionando a chave ao keyTELL do usuario
+                    keyTell.textContent = "Chave Adicionada com sucesso: " + telefone;
+                    dados[atualUser].chaveTel = telefone;
+                    console.log(dados[atualUser].chaveTel);
+                    container.appendChild(keyTell);
+                    setTimeout(chavesTransf,5000); //Resetando apos 5 segundos
+                } else {
+                    alert("Telefone Invalido");
+                }
+            });
+        }
+    }
 }
 
 
 //Funcao para fazer aquela transferencia marota
 function transferencia() {
-
     console.log(atualUser);
 
     //Container onde tudo esta sendo manipulado
@@ -412,24 +487,28 @@ function transferencia() {
     //Ela exibe o valor da trasnferencia e o usuario e pede para ele digitar novamente se ele tem certeza!
     function confirma() {
         //Transformando o valor input em um numero inteiro para então comparar
-        input = parseFloat(input.value);
-        if (input > dados[atualUser].saldo) {
+        let value = parseFloat(input.value);
+        if (value > dados[atualUser].saldo) {
             paragrafo.textContent = "Saldo insuficiente!";  //Se o cara tentar tiver metendo o golpe ele n conseguir trasnferir né, aqueles pique
             return;
         } else {
-            paragrafo.textContent = `Tem certeza que deseja trasnferir ${input} ao usuario ${userTransf}`;
+            paragrafo.textContent = `Tem certeza que deseja trasnferir ${value} reais?`;
             confirmaButtonTransf.textContent = "Confirme o valor";
             container.appendChild(confirmaButtonTransf);
-            confirmaButton.addEventListener("confirmando", confirmaDinheiro(input))
+            confirmaButtonTransf.addEventListener("click", function(){
+                dados[atualUser].saldo = dados[atualUser].saldo - value;
+                dados[userTransf].saldo = dados[userTransf].saldo + value;
+                paragrafo.textContent = `Saldo atual: ${dados[atualUser].saldo}`;
+                container.appendChild(paragrafo);
+                setTimeout(transferencia,3000);
+            });
         }
         container.appendChild(paragrafo);
     }
-
-    function confirmaDinheiro(value){
-        dados[atualUser].saldo -= value;
-        dados[userTransf].saldo += value
-        paragrafo.textContent = `Saldo atual: ${dados[atualUser].saldo}`;
-        container.appendChild(paragrafo);
-        setTimeout(container.innerHTML ="",5000);
-    }
 }
+
+
+
+
+
+
